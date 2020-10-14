@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--ความกว้างเว็บ เท่ากับขนาดหน้าจอที่ใช้ -->
+    <title>SwiperJS</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.3/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+   <link rel="stylesheet" href="css/hamburgers.min.css">
+   <link href="https://fonts.googleapis.com/css2?family=Piazzolla:ital,wght@1,100;1,200&display=swap" rel="stylesheet"><!-- 2.set style -->
+    <style>
+        body {
+            font-family: 'Piazzolla', serif;
+     }
+        .swiper-container  {
+            padding-top: 60px;
+        }
+        .swiper-container , .swiper-slide img {
+        width: 100vw; /* Responsive support VW , VH เข้าด้วยมือถือ แม่นยำกว่า % */
+        height: auto; /* ความสูงเปลี่ยนไปตามขนาดรูป*/
+        }
+        .navbar-toggler{
+            position: absolute;
+            left: 20px;
+            top: 10px;
+            outline: 0 !important;   /* important คือบังคับให้ค่านี้เป็นค่าเริ่มต้น */
+        }
+        .hamburger {
+            padding-top: 10px;
+            outline: 0 !important;
+        }
+        .hamburger .hamburger-box .hamburger-inner::before{   /* เส้น เมนู ด้านบน */
+            width: 30px !important;
+        }
+        .hamburger .hamburger-box .hamburger-inner{ /* เส้น เมนู ตรงกลาง */
+            width: 30px !important;
+        }
+        .hamburger .hamburger-box .hamburger-inner::after{ /* เส้น เมนู ตรงกลาง */
+            width: 30px !important;
+        }
+        .navbar {
+            padding: 15px ;
+        }
+        @media screen and (min-width: 50px) {
+            /* hide Slide Destop */
+            .destop {
+                display: none;
+            }
+            .mobile {
+                display: block;
+            }
+            .navbar-brand 
+            {
+                margin-left: 80px;
+            }
+             
+        } 
+        @media screen and (min-width: 769px) {
+            /* hide Slide Mobile */
+            .destop {
+                display: block;
+            }
+            .mobile {
+                display: none;
+            }
+            .navbar-brand 
+            {
+                margin-left: 0px;
+            }
+        }
+            /* Navbar Tablet Size */
+        @media screen and (max-width: 768px) {
+            .navbar-collapse {
+                z-index: 100; /* เพื่อให้ เมนูแสดงบน slide*/
+                position: absolute;
+                top: 70px;
+                left: 0;
+                padding-left: 15px;
+                padding-right: 15px;
+                padding-bottom: 15px;
+                width: 100%;
+                background-color:rgba(216, 224, 224, 0.479) ;
+            }
+            .navbar-collapse.collapsing {
+                height: auto;
+                -webkit-transition: left  0.1s ease; /* 0s เพื่อไม่ให้หน่วงเวลา ,ease,linear*/
+                -o-transition: left  0.1s ease;
+                -moz-transition: left 0.1s ease;
+                transition: left 0.1s ease;
+                left: -100%;
+            }
+            .navbar-collapse.show {
+                left: 0;
+                -webkit-transition: left 0.3s ease-in;
+                -o-transition: left 0.3s ease-in;
+                -moz-transition: left 0.3s ease-in;
+                transition: left 0.3s ease-in;
+            }
+        }
+        .hamburger--arrowturn-r.is-active .hamburger-inner {
+        transform: rotate(-180deg); }
+        .hamburger--arrowturn-r.is-active .hamburger-inner::before {
+            transform: translate3d(-8px, 0, 0) rotate(-45deg) scale(0.7, 1); }
+        .hamburger--arrowturn-r.is-active .hamburger-inner::after {
+            transform: translate3d(-8px, 0, 0) rotate(45deg) scale(0.7, 1); }
+
+
+    </style>
+</head>
+<body>
+  
+ <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top"> <!--fixed-top เพื่อไม่ใ้ slider อยู่ที่เดิม -->
+    <a class="navbar-brand" href="#">SwiperJS</a>
+     <!-- <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button> -->
+    <button class="hamburger hamburger--arrowturn  navbar-toggler d-md-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" >
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
+      
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Service</a>
+            </li>
+            <li class="nav-item">
+                
+                <a class="nav-link" href="#">Contact   </a>
+            </li>
+            
+    </div>
+</nav>
+
+<!-- Destop Slide -->
+<!-- 1. Slider main container -->
+<div class="swiper-container destop">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide">
+            <img src="images/banner1.png" alt="">
+        </div>
+        <div class="swiper-slide">
+            <img src="images/banner2.jpg" alt="">
+        </div>
+        <div class="swiper-slide">
+            <img src="images/banner3.jpg" alt="">
+        </div>
+    </div>
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+    <!-- If we need scrollbar -->
+    <!-- <div class="swiper-scrollbar"></div> -->
+</div>
+
+<!-- Mobile Slide -->
+<!-- 1. Slider main container -->
+<div class="swiper-container mobile"> <!-- mobile = class-->
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide">
+            <img src="images/banner1_mobile.png" alt="">
+        </div>
+        <div class="swiper-slide">
+            <img src="images/banner2_mobile.jpg" alt="">
+        </div>
+        <div class="swiper-slide">
+            <img src="images/banner3_mobile.jpg" alt="">
+        </div>
+    </div>
+    <!-- If we need pagination -->
+    <div class="swiper-pagination"></div>
+
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+    <!-- If we need scrollbar -->
+    <!-- <div class="swiper-scrollbar"></div> -->
+</div>
+
+
+
+<div class="container-fluid my-4">
+    <h1>Swiper Slider</h1>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo quisquam quidem error et eos eveniet fugit reiciendis repudiandae delectus sapiente accusamus voluptatibus inventore consequatur dolorum fuga exercitationem, officia temporibus repellat.
+    </p>
+</div>
+<div class="container-fluid my-4">
+    <h1>Swiper Slider</h1>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo quisquam quidem error et eos eveniet fugit reiciendis repudiandae delectus sapiente accusamus voluptatibus inventore consequatur dolorum fuga exercitationem, officia temporibus repellat.
+    </p>
+</div>
+    <script
+    src="https://code.jquery.com/jquery-2.2.4.js"
+    integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+    crossorigin="anonymous"></script>  
+    <script src="https://kit.fontawesome.com/4556ace775.js" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script> 
+    <!-- 3.Initialize Swiper -->
+    <script>
+        var mySwiper = new Swiper('.swiper-container', {
+  // Optional parameters
+        direction: 'horizontal', //vertical
+        loop: true,
+
+        // If we need pagination
+        pagination: {
+            el: '.swiper-pagination',
+            clickable : true // คลิก ... เพื่อเลื่อนรูป
+        },
+
+        autoplay: {
+            delay: 2000, // 1000 1 วิ
+        }, 
+        mousewheel: {
+            invert: true,
+        },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        // And if we need scrollbar
+        // scrollbar: {
+        //     el: '.swiper-scrollbar',
+        // },
+        })
+    </script>
+    <script>
+         var forEach=function(t,o,r){if("[object Object]"===Object.prototype.toString.call(t))for(var c in t)Object.prototype.hasOwnProperty.call(t,c)&&o.call(r,t[c],c,t);else for(var e=0,l=t.length;l>e;e++)o.call(r,t[e],e,t)};
+
+            var hamburgers = document.querySelectorAll(".hamburger");
+            if (hamburgers.length > 0) {
+            forEach(hamburgers, function(hamburger) {
+                hamburger.addEventListener("click", function() {
+                this.classList.toggle("is-active");
+                }, false);
+            });
+            }
+    </script>
+</body>
+</html>
